@@ -1,0 +1,41 @@
+{{!< default}}
+
+{{!--
+
+There are two error files in this theme, one for 404s and one for all other errors.
+This file is the former, and handles all 404 Page Not Found errors.
+
+The 404 error is the most common error that a visitor might see, for example when
+following a broken link
+
+Keep this template as lightweight as you can!
+
+--}}
+
+
+<div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
+    {{#if @site.cover_image}}
+        {{!-- This is a responsive image, it loads different sizes depending on device
+        https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
+        <img class="site-header-cover"
+            src="{{asset "images/muni-crash.png"}}"
+            alt=""
+        />
+    {{/if}}
+    <h1 class="site-title">
+        {{#if @site.logo}}
+            <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
+        {{else}}
+            {{statusCode}}
+        {{/if}}
+    </h1>
+    <p>{{message}}</p>
+</div>
+
+<section class="outer error-content">
+    <div class="inner">
+        <section class="error-message">
+            <a class="error-link" href="{{@site.url}}">Go to the front page →</a>
+        </section>
+    </div>
+</section>

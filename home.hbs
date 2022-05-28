@@ -1,0 +1,68 @@
+{{!< default}}
+{{!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template --}}
+
+{{#match @custom.publication_cover_style "!=" "None"}}
+    <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
+        {{#if @site.cover_image}}
+            {{!-- This is a responsive image, it loads different sizes depending on device
+            https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
+            <img class="site-header-cover"
+                srcset="{{img_url @site.cover_image size="s"}} 300w,
+                        {{img_url @site.cover_image size="m"}} 600w,
+                        {{img_url @site.cover_image size="l"}} 1000w,
+                        {{img_url @site.cover_image size="xl"}} 2000w"
+                sizes="100vw"
+                src="{{img_url @site.cover_image size="xl"}}"
+                alt=""
+            />
+        {{/if}}
+        <h1 class="site-title">
+            {{#if @site.logo}}
+                <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
+            {{else}}
+                {{@site.title}}
+            {{/if}}
+        </h1>
+        <p>{{@site.description}}</p>
+    </div>
+{{/match}}
+
+
+{{#page}}
+{{!-- Everything inside the #post block pulls data from the page --}}
+
+<main id="site-main" class="site-main">
+    <article class="article {{post_class}}">
+
+        <header class="article-header gh-canvas">
+            {{#if feature_image}}
+            <figure class="article-image">
+                {{!-- This is a responsive image, it loads different sizes depending on device
+                https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
+                <img
+                    srcset="{{img_url feature_image size="s"}} 300w,
+                            {{img_url feature_image size="m"}} 600w,
+                            {{img_url feature_image size="l"}} 1000w,
+                            {{img_url feature_image size="xl"}} 2000w"
+                    sizes="(min-width: 1400px) 1400px, 92vw"
+                    src="{{img_url feature_image size="xl"}}"
+                    alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                />
+                {{#if feature_image_caption}}
+                    <figcaption>{{feature_image_caption}}</figcaption>
+                {{/if}}
+            </figure>
+            {{/if}}
+        </header>
+
+        <section class="gh-content gh-canvas">
+
+            {{content}}
+
+        </section>
+
+    </article>
+</main>
+
+{{/page}}
